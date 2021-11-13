@@ -30,8 +30,6 @@
 | scope | String(64)| not null |
 | created_datetime| DateTime| not null |
 | event_datetime | DateTime| not null |
-| is_approved | Bool| not null, default=False |
-
 
 **Comment**
 
