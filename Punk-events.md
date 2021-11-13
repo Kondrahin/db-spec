@@ -23,7 +23,7 @@
 | id   | Integer|  primary_key|
 | uuid| UUID| unique, not null|
 | creator| UUID|not null, FOREIGN KEY (User.uuid)|
-| participants| UUID |FOREIGN KEYS (User.uuid)|
+| participants| ARRAY(UUID) |FOREIGN KEYS (User.uuid)|
 | title | String(64)| not null |
 | description | String(256)||
 | location | String(64)| not null |
@@ -39,7 +39,7 @@
 | ---- | ---- | ---------- |
 | id   | Integer|  primary_key|
 | uuid| UUID| unique, not null|
-| data| string|not null|
+| data| String(256)|not null|
 | user_uuid | UUID| not null, FOREIGN KEY (User.uuid) |
 | event_uuid | UUID|not null, FOREIGN KEY (Event.uuid) |
 | created_datetime| DateTime| not null |
@@ -65,10 +65,14 @@ Admin (Кол-во: 1)
 - Назначение модераторов (Доступ к таблице `Moderator`)
 - Удаление пользователей
 - Написание комментариев к любому мероприятию
+- Проверка созданных мероприятий на запрещенные темы/слова/выражения и удаление таковых
+- Оповещение пользователя об удалении созданного мероприятия (указание причины)
 
-Moderator(Кол-во: 1-10)
+Moderator (Кол-во: 1-10)
 - Создание/удаление/редактирование любых мероприятий
 - Написание комментариев к любому мероприятию
+- Проверка созданных мероприятий на запрещенные темы/слова/выражения и удаление таковых
+- Оповещение пользователя об удалении созданного мероприятия (указание причины)
 
 User (Логин **только по st**, Кол-во: сколько позволит машина)
 - Создание/удаление/редактирование своих мероприятий
