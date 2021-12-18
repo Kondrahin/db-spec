@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ISSPECS SYSTEM "ISSpecs.dtd">
+<ISSPECS>
+	<DESCRIPTION>
+		<TITLE>
+			PUNK Events
+		</TITLE>
+		<SUBJ>
+			Сайт для создания/просмотра мероприятий
+		</SUBJ>
+	</DESCRIPTION>
+	<DATA>
+		<ENTITY ent_id="User">
+			<PROPERTY>
+				id
+			</PROPERTY>
+			<PROPERTY>
+				uuid
+			</PROPERTY>
+			<PROPERTY>
+				email
+			</PROPERTY>
+			<PROPERTY>
+				full_name
+			</PROPERTY>
+		</ENTITY>
+		<ENTITY ent_id="Event">
+			<PROPERTY>
+				id
+			</PROPERTY>
+			<PROPERTY>
+				uuid
+			</PROPERTY>
+			<PROPERTY>
+				creator
+			</PROPERTY>
+			<PROPERTY>
+				participants
+			</PROPERTY>
+			<PROPERTY>
+				title
+			</PROPERTY>
+			<PROPERTY>
+				description
+			</PROPERTY>
+			<PROPERTY>
+				location
+			</PROPERTY>
+			<PROPERTY>
+				scope
+			</PROPERTY>
+			<PROPERTY>
+				created_datetime
+			</PROPERTY>
+			<PROPERTY>
+				event_datetime
+			</PROPERTY>
+		</ENTITY>
+		<ENTITY ent_id="Comment">
+			<PROPERTY>
+				id
+			</PROPERTY>
+			<PROPERTY>
+				uuid
+			</PROPERTY>
+			<PROPERTY>
+				data
+			</PROPERTY>
+			<PROPERTY>
+				user_uuid
+			</PROPERTY>
+			<PROPERTY>
+				event_uuid
+			</PROPERTY>
+			<PROPERTY>
+				created_datetime
+			</PROPERTY>
+		</ENTITY>
+		<ENTITY ent_id="Moderator">
+			<PROPERTY>
+				id
+			</PROPERTY>
+			<PROPERTY>
+				user_uuid
+			</PROPERTY>
+		</ENTITY>
+		<RELATIONSHIP ent_ids="User Comment">
+			<PROPERTY>
+				One to Many
+			</PROPERTY>
+		</RELATIONSHIP>
+		<RELATIONSHIP ent_ids="User Event">
+			<PROPERTY>
+				Many to Many
+			</PROPERTY>
+		</RELATIONSHIP>
+		<RELATIONSHIP ent_ids="Comment Event">
+			<PROPERTY>
+				Many to One
+			</PROPERTY>
+		</RELATIONSHIP>
+		<CONSTRAINT>
+			User.id - primary key
+		</CONSTRAINT>
+		<CONSTRAINT>
+			Event.id - primary key
+		</CONSTRAINT>
+		<CONSTRAINT>
+			Comment.id - primary key
+		</CONSTRAINT>
+		<CONSTRAINT>
+			Moderator.id - primary key
+		</CONSTRAINT>
+		<CONSTRAINT>
+			Event.creator - ON DELETE CASCADE
+		</CONSTRAINT>
+		<CONSTRAINT>
+			Comment.user_uuid - ON DELETE CASCADE
+		</CONSTRAINT>
+		<CONSTRAINT>
+			User_event_association.event_uuid - ON DELETE CASCADE
+		</CONSTRAINT>
+		<CONSTRAINT>
+			User_event_association.user_uuid - ON DELETE CASCADE
+		</CONSTRAINT>
+	</DATA>
+	<ROLES>
+		<ROLE>
+			<TITLE>
+				Admin
+			</TITLE>
+			<RESPONSIBILITY>
+				Создание/удаление/редактирование любых мероприятий
+			</RESPONSIBILITY>
+			<RESPONSIBILITY>
+				Назначение модераторов (Доступ к таблице `Moderator`)
+			</RESPONSIBILITY>
+			<RESPONSIBILITY>
+				Удаление пользователей
+			</RESPONSIBILITY>
+			<RESPONSIBILITY>
+				Написание комментариев к любому мероприятию
+			</RESPONSIBILITY>
+			<TOTALUSERS>
+				1
+			</TOTALUSERS>
+		</ROLE>
+		<ROLE>
+			<TITLE>
+				Moderator
+			</TITLE>
+			<RESPONSIBILITY>
+				Создание/удаление/редактирование любых мероприятий
+			</RESPONSIBILITY>
+			<RESPONSIBILITY>
+				Написание комментариев к любому мероприятию
+			</RESPONSIBILITY>
+			<TOTALUSERS>
+				1-10
+			</TOTALUSERS>
+		</ROLE>
+		<ROLE>
+			<TITLE>
+				User
+			</TITLE>
+			<RESPONSIBILITY>
+				Создание/удаление/редактирование своих мероприятий
+			</RESPONSIBILITY>
+			<RESPONSIBILITY>
+				Написание комментариев к любому мероприятию
+			</RESPONSIBILITY>
+			<RESPONSIBILITY>
+				Подписка на мероприятия
+			</RESPONSIBILITY>
+			<TOTALUSERS>
+				100-500
+			</TOTALUSERS>
+		</ROLE>
+	</ROLES>
+	<TECHSPEC>
+		<TYPE>
+			Web Site
+		</TYPE>
+		<DEVTOOLS>
+			<DEV>
+				Python (FastAPI)
+			</DEV>
+			<DEV>
+				SQLAlchemy
+			</DEV>
+			<DEV>
+				React JS
+			</DEV>
+		</DEVTOOLS>
+		<DBMS>
+			<TITLE>
+				Postgresql
+			</TITLE>
+			<VERSION>
+				13.9
+			</VERSION>
+			<REASONING>
+				Postgresql поддерживает обширный список типов данных, поддержка JSON, может обрабатывать много данных,  для большинства существующих типов данных могут храниться массивы значений, поддержка ORM SQLAlchemy
+			</REASONING>
+		</DBMS>
+	</TECHSPEC>
+</ISSPECS>
